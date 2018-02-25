@@ -30,51 +30,51 @@ const formidable = require("formidable");
 const vcapServices = require("vcap_services");
 const credentials = vcapServices.getCredentials("watson_vision_combined");
 const child_process = require("child_process");
-const WatsonVisRecSetup= require('./lib/watson-visRec-setup');
+//const WatsonVisRecSetup= require('./lib/watson-visRec-setup');
 
 const visual_recognition = watson.visual_recognition({
     version: "v3",
     version_date: "2016-05-20"
 });
 
-var custom_classifier = null;
+var custom_classifier = "emotion_test_83609983";
 
 // setupError will be set to an error message if we cannot recover from service setup or init error.
 let setupError = '';
 
-const visRecSetup = new WatsonVisRecSetup(visual_recognition);
-const visRecSetupParams = {
-  "classifiers": [
-    {
-      "classifier_id": "",
-      "name": "vehicleDamageAnalyzer",
-      "status": "ready"
-    }
-  ]
-}
-
-visRecSetup.setupVisRec(visRecSetupParams, (err, data) => {
-  if (err) {
-    handleSetupError(err);
-  } else {
-    console.log('Visual Recognition is ready!');
-    console.log('vehicleDamageAnalyzer classifier_id: ' + data.classifier_id);
-    custom_classifier = data.classifier_id;
-  }
-});
-
-/**
- * Handle setup errors by logging and appending to the global error text.
- * @param {String} reason - The error message for the setup error.
- */
-function handleSetupError(reason) {
-  setupError += ' ' + reason;
-  console.error('The app failed to initialize properly. Setup and restart needed.' + setupError);
-  // For testing allow the app to run. It would just report the above error.
-  // Or we can add the following 2 lines to abort on a setup error allowing Bluemix to restart it.
-  console.error('\nAborting due to setup error!');
-  process.exit(1);
-}
+// const visRecSetup = new WatsonVisRecSetup(visual_recognition);
+// const visRecSetupParams = {
+//   "classifiers": [
+//     {
+//       "classifier_id": "",
+//       "name": "vehicleDamageAnalyzer",
+//       "status": "ready"
+//     }
+//   ]
+// }
+//
+// visRecSetup.setupVisRec(visRecSetupParams, (err, data) => {
+//   if (err) {
+//     handleSetupError(err);
+//   } else {
+//     console.log('Visual Recognition is ready!');
+//     console.log('vehicleDamageAnalyzer classifier_id: ' + data.classifier_id);
+//     custom_classifier = data.classifier_id;
+//   }
+// });
+//
+// /**
+//  * Handle setup errors by logging and appending to the global error text.
+//  * @param {String} reason - The error message for the setup error.
+//  */
+// function handleSetupError(reason) {
+//   setupError += ' ' + reason;
+//   console.error('The app failed to initialize properly. Setup and restart needed.' + setupError);
+//   // For testing allow the app to run. It would just report the above error.
+//   // Or we can add the following 2 lines to abort on a setup error allowing Bluemix to restart it.
+//   console.error('\nAborting due to setup error!');
+//   process.exit(1);
+// }
 
 application.use(express.static(__dirname + "/public"));
 application.post("/uploadpic", function (req, result) {
@@ -107,3 +107,4 @@ application.listen(port, function () {
     console.log("Server running on port: %d", port);
 });
 require("cf-deployment-tracker-client").track();
+//classifier_ids: [custom_classifier] || "",

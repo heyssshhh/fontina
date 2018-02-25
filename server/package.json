@@ -16,7 +16,7 @@
  "license": "Apache-2.0",
  "repository": {
     "type": "git",
-    "url": "https://github.com/IBM/watson-vehicle-damage-analyzer.git"
+    "url": "https://github.com/heyssshhh/watson-vehicle-damage-analyzer.git"
   },
   "dependencies": {
     "body-parser": "^1.17.x",
